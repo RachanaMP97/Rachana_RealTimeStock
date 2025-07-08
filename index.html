@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📊 Real-Time Stock Dashboard – By Rachana</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e1f5fe, #fce4ec);
+      overflow-x: hidden;
+    }
+
+    .top-bar {
+      background-color: #1a237e;
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .top-bar-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .top-bar img {
+      height: 50px;
+    }
+
+    .clock {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 60px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .box {
+      background: white;
+      padding: 40px 60px;
+      border-radius: 15px;
+      display: inline-block;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .box:hover {
+      transform: scale(1.01);
+    }
+
+    h2 {
+      color: #1b5e20;
+      margin-bottom: 20px;
+      font-size: 1.7em;
+    }
+
+    select {
+      padding: 12px;
+      font-size: 1em;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      border: 1px solid #aaa;
+    }
+
+    .price {
+      font-size: 3em;
+      color: #2e7d32;
+      margin: 20px 0;
+      animation: pulse 1s infinite alternate;
+    }
+
+    .time {
+      font-size: 0.95em;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .footer {
+      margin-top: 60px;
+      font-size: 0.95em;
+      color: #444;
+      text-align: center;
+      animation: floatText 5s infinite ease-in-out;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      from { text-shadow: 0 0 5px #81c784; }
+      to { text-shadow: 0 0 15px #2e7d32; }
+    }
+
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <img src="bits-logo.png" alt="BITS Pilani Logo">
+      <h1>📊 BITS Pilani – Real-Time Stock Dashboard</h1>
+    </div>
+    <div class="clock" id="clock">--:--:--</div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <div class="box">
+      <h2>📈 Real-Time Price for: <span id="stockName">RELIANCE</span></h2>
+
+      <select id="stockSelector" onchange="fetchPrice()">
+        <option value="RELIANCE.NS">RELIANCE</option>
+        <option value="TCS.NS">TCS</option>
+        <option value="INFY.NS">INFOSYS</option>
+        <option value="HDFCBANK.NS">HDFC BANK</option>
+        <option value="ICICIBANK.NS">ICICI BANK</option>
+      </select>
+
+      <div class="price" id="price">Loading...</div>
+      <div class="time" id="time"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    // Step 1: Build a Live Stock Price Dashboard (HTML + JavaScript)<br>
+    // By <strong>RACHANA MANOJ PALEKAR</strong><br>
+    // BITS ID: <em>2021wa86146@wilp.bits-pilani.ac.in</em>
+  </div>
+
+  <script>
+  // Simulated base prices for each stock
+  const basePrices = {
+    "RELIANCE.NS": 2900,
+    "TCS.NS": 3650,
+    "INFY.NS": 1520,
+    "HDFCBANK.NS": 1700,
+    "ICICIBANK.NS": 1125
+  };
+
+  // Clock updater
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString();
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Simulate stock price on dropdown change
+  function fetchPrice() {
+    const selector = document.getElementById('stockSelector');
+    const symbol = selector.value;
+    const stockName = selector.options[selector.selectedIndex].text;
+
+    document.getElementById('stockName').textContent = stockName;
+
+    // Get base price and apply random variation (-5 to +5)
+    const basePrice = basePrices[symbol] || 1000;
+    const variation = (Math.random() * 10 - 5).toFixed(2);
+    const simulatedPrice = (basePrice + parseFloat(variation)).toFixed(2);
+
+    document.getElementById('price').textContent = `₹ ${simulatedPrice}`;
+    document.getElementById('time').textContent = `Last Updated: ${new Date().toLocaleTimeString()}`;
+  }
+
+  // Initial load
+  fetchPrice();
+</script>
+
+
+</body>
+</html>
